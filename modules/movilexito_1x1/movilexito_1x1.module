@@ -1,0 +1,21 @@
+<?php 
+
+
+/**
+ * Implements hook_theme().
+ */
+function movilexito_1x1_theme($existing, $type, $theme, $path)
+{
+    return [
+        'register-line' => [
+            'variables' => [
+                'form' => NULL,
+            ],
+            'template' => 'page-register-line'
+        ],
+    ];
+}
+
+
+
+ ?>

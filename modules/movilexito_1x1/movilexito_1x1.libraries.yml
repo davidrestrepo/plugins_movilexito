@@ -1,0 +1,16 @@
+movilexito_1x1:
+  version: 1.0
+  css:    
+    theme:
+      css/color-red-green.css: {}
+  js:
+    js/movilexito_1x1.js: {}
+  dependencies:
+   - core/system
+   - core/jquery
+   - core/drupal
+   - core/drupal.ajax
+   - core/drupal.dialog.ajax
+   - core/drupal.form
+   - core/drupalSettings
+   - core/jquery-once

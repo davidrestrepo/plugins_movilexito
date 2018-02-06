@@ -1,0 +1,13 @@
+movilexito_pqr.messages_cun.admin:
+  title: 'Mensaje CUN'
+  description: 'Parametrizar mensaje de respuesta fallida al consulta de CUN'
+  parent: system.admin_config_development
+  route_name: movilexito_pqr.messages_cun
+  weight: 100
+
+movilexito_pqr.config_pqr.admin:
+  title: 'Configuración Registro PQR'
+  description: 'Parametrizar información para el registro de PQR'
+  parent: system.admin_config_development
+  route_name: movilexito_pqr.config_pqr
+  weight: 100

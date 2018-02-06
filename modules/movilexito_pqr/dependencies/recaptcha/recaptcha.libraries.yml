@@ -1,0 +1,7 @@
+recaptcha:
+  version: 1.0
+  css:
+    theme:
+
+  js:
+    https://www.google.com/recaptcha/api.js?onload=google_recaptcha_onload&render=explicit&hl=es: { type: external, minified: true }

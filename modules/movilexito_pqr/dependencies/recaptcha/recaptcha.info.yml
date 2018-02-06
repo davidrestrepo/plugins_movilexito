@@ -1,0 +1,8 @@
+name: Google reCAPTCHA
+description: 'Provide integration with Google reCAPTCHA service for protection site forms. Read more: http://www.google.com/recaptcha'
+configure : admin/config/spam_protection/google_recaptcha/keys
+package: Spam protection
+
+type: module
+core: 8.x
+ 

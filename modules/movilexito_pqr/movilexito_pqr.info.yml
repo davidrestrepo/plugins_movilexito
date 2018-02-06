@@ -1,0 +1,11 @@
+name: Movilexito PQR
+type: module
+description: 'Módulo para administración de PQR Movíl Éxito'
+package: Movilexito
+version: 1.0
+core: 8.x
+dependencies:
+ - recaptcha
+libreries:
+ - movilexito_pqr
+ 

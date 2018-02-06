@@ -1,0 +1,20 @@
+movilexito_ws.admin:
+  title: 'Registro ws'
+  description: 'Registro de datos de acceso a consumo de ws'
+  parent: system.admin_config_development
+  route_name: movilexito_ws.reg
+  weight: 100
+
+movilexito_messeges_ws.admin:
+  title: 'Registro mensajes'
+  description: 'Registro de mensajes de respuesta'
+  parent: system.admin_config_development
+  route_name: movilexito_messeges_ws.reg
+  weight: 100
+
+movilexito_messeges_ws.report.admin:
+  title: 'Reportes ws'
+  description: 'repotes de respuesta de ws'
+  parent: system.admin_config_development
+  route_name: movilexito_messeges_ws.report
+  weight: 100

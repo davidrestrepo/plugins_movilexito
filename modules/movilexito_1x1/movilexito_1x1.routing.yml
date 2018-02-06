@@ -1,0 +1,18 @@
+movilexito_1x1.exito_1x1_controller_register:
+  path: '/movilexito_1x1/registro'
+  defaults:
+    _controller: '\Drupal\movilexito_1x1\Controller\MovilExito1x1Controller::registerPage'
+    _title: ''    
+  options:
+    no_cache: TRUE
+  requirements:
+    _permission: 'access content'
+
+movilexito_1x1.exito_1x1_controller_submit_data:
+  path: '/movilexito_1x1/submit_data'
+  defaults:
+    _controller: '\Drupal\movilexito_1x1\Controller\MovilExito1x1Controller::submitRegister'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: TRUE

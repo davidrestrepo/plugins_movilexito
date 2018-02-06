@@ -1,0 +1,6 @@
+name: Movilexito ws
+type: module
+description: 'Módulo para configuración de webservices de movilexito'
+package: Movilexito
+version: 1.0
+core: 8.x

@@ -1,0 +1,142 @@
+<?php 
+use Drupal\movilexito_pqr\Controller\MovilExitoPQRController;
+
+/**
+ * Implements hook_theme().
+ */
+function movilexito_pqr_theme($existing, $type, $theme, $path)
+{
+    return [
+        'consult-pqr' => [
+            'variables' => [
+                'form' => NULL,
+            ],
+            'template' => 'page-consult-pqr'
+        ],
+
+        'report-pqr' => [
+	      'variables' => [
+	      		'data' => array(),
+	      	],
+	      	'template' => 'page-report-pqr'
+	    ],
+
+    ];
+}
+
+
+/**
+ * Implements hook_mail().
+ */
+function movilexito_pqr_mail($key, &$message, $params) {
+  switch ($key) {
+    case 'envio_pqr':
+      $td = array(
+                'cc' => 'Cedula de ciudadanía',
+                'nit' => 'NIT',
+                'ce' => 'Cedula de extranjería',
+                'pp' => 'Pasaporte',
+            );
+      $pqr = array(
+                'peticion' => 'Petición',
+                'queja' => 'Queja',
+                'recurso_reposicion' => 'Recurso Reposición',
+                'recurso_reposicion_apelacion' => 'Recurso Reposición Subsidio de Apelación'
+            );
+	    $message['subject'] = 'Registro PQR';
+ 		   
+      $body = file_get_contents(drupal_get_path('module', 'movilexito_pqr') . '/libreries/template_email.html');
+   		$params_template = array(
+   			'[[pqr]]', 
+   			'[[operator]]', 
+   			'[[objeto_pqr]]',
+   			'[[hechos_pqr]]',
+   			'[[company_name]]',
+   			'[[last_name]]',
+   			'[[document_type]]',
+   			'[[document_number]]',
+   			'[[contact_email]]',
+   			'[[contact_phone]]',
+   			'[[anio]]'
+   		);
+
+   		$data_template = array(
+   			$pqr[$params['pqr']],
+   			$params['operator'],
+   			$params['objeto_pqr'],
+   			$params['hechos_pqr'],
+   			$params['company_name'],
+   			$params['last_name'],
+   			$td[$params['document_type']],
+   			$params['document_number'],
+   			$params['contact_email'],
+   			$params['contact_phone'],
+   			date('Y')
+   		);
+      $body = str_replace( $params_template, $data_template, $body);
+	    $message['body'][] = $body;
+	    
+	    $message['headers']['Content-Type'] = 'text/html; charset=UTF-8; format=flowed; delsp=yes';
+
+
+	    if (!empty($params['file'])) {
+	    	$path = 'public://movilexito_pqr/'.$params['file'];
+		    $file  = new stdClass();
+	     	$file->uri = $path;
+	     	$file->filename = $params['file'];
+	     	$file->filemime = \Drupal::service('file.mime_type.guesser')->guess($path);
+		   	$message['params']['attachments'][]= $file;
+	    }
+	    
+      break;
+  }
+}
+
+
+/**
+ * Implements hook_cron().
+ */
+function movilexito_pqr_cron(){
+
+  $cleantime = \Drupal::state()->get('pqr_delete_emails');
+  $now = strtotime( date('Y-m-d H:i:s') );
+
+  $query = db_select('movilexito_crn_email', 'e');
+  $query->fields('e');
+  $response = $query->execute()->fetchAll();
+
+  if( !empty( $response ) ) {
+
+    foreach ($response as $key => $value) {
+      $diff = $now - $response[$key]->created;
+      $data = json_decode($response[$key]->datos, true);
+
+      $pqr = new MovilExitoPQRController;
+      $pqr->enviar_pqr( $data);
+  		
+      if( $diff >= $cleantime || $send ){
+        $delete = db_delete('movilexito_crn_email');
+        $delete->condition('id', $response[$key]->id);
+        $delete->execute();
+
+        if( !empty( $response[$key]->datos ) ){
+
+          foreach ($data as $k => $val) {
+            $file = $data[$k]['file'];
+            if( !empty( $file ) ){
+              unlink('public://movilexito_pqr/'.$file);
+            }
+          }
+
+        }
+        
+      }
+  
+    }
+
+  }
+
+}
+
+
+ ?>

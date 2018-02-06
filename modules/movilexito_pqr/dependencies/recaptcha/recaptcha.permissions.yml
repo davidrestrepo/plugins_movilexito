@@ -1,0 +1,4 @@
+administer recaptcha:
+  title: 'Administer Google reCAPTCHA'
+  description: 'Administer key for Google reCAPTCHA'
+  restrict access: true

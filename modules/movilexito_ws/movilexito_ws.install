@@ -1,0 +1,68 @@
+<?php
+
+/**
+ * Implements hook_schema().
+ */
+function movilexito_ws_schema()
+{
+    $schema = [];
+    
+    $schema['exito_me_ws_log'] = [
+        'fields' => [
+            'id' => [
+                'type' => 'serial',
+                'not null' => TRUE
+            ],
+            'tipo_documento' => [
+                'type' => 'varchar',
+                'length' => '2',
+                'not null' => TRUE,
+                'description' => 'Tipo de documento del cliente: cc => cédula de ciudadania, ce => cédula de extranjería, pp =>pasaporte',
+            ],
+            'documento' => [
+                'type' => 'varchar',
+                'length' => '20',
+                'not null' => FALSE,
+                'description' => 'Número de documento del cliente'
+            ],
+            'user_ip' => [
+                'type' => 'varchar',
+                'length' => '30',
+                'not null' => FALSE,
+                'description' => 'Número de IP del cliente'
+            ],
+            'resultado_ws' => [
+                'type' => 'varchar',
+                'length' => '100',
+                'not null' => FALSE,
+                'description' => 'Servicio y estado el que finalizo'
+            ],
+            'resultado_ws_detalle' => [
+                'type' => 'varchar',
+                'length' => '200',
+                'not null' => FALSE,
+                'description' => 'Más detalles sobre el estado final del proceso.'
+            ],
+            'servicio_ws' => [
+                'type' => 'varchar',
+                'length' => '100',
+                'not null' => FALSE,
+                'description' => 'Servicio en el que finalizo el proceso'
+            ],
+            'fecha_actualizacion' => [
+                'type' => 'datetime',
+                'mysql_type' => 'datetime',
+                'not null' => FALSE
+            ]
+        ],
+        'primary key' => ['id'],
+        'indexes' => [
+            'documento' => ['documento'], 
+            'tipo_documento' => ['tipo_documento'],
+            'servicio_ws' => ['servicio_ws'], 
+            'fecha_actualizacion' => ['fecha_actualizacion'], 
+        ],
+    ];
+    
+    return $schema;
+}

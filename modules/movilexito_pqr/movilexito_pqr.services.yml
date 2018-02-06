@@ -1,0 +1,3 @@
+services:
+  movilexito_pqr.recaptcha:
+    class: Drupal\recaptcha\Model\RecaptchaModel

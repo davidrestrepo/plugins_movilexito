@@ -1,0 +1,11 @@
+name: Movilexito 1x1
+type: module
+description: 'Módulo para funconalidad de movilexito 1x1'
+package: Movilexito
+version: 1.0
+core: 8.x
+libreries:
+ - movilexito_1x1
+dependencies:
+ - movilexito_ws
+ 

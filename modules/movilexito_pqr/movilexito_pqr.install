@@ -1,0 +1,139 @@
+<?php
+
+use Drupal\movilexito_pqr\Scripts\Querys;
+
+define('MOVILEXITO_STATES', 'movilexito_states');
+define('MOVILEXITO_CITIES', 'movilexito_cities');
+define('MOVILEXITO_CRN_EMAIL', 'movilexito_crn_email');
+
+/**
+ * Implements hook_install().
+ */
+function movilexito_pqr_schema() {
+	$schema = [];
+	$schema[MOVILEXITO_STATES] = get_schema_movilexito_states();
+	$schema[MOVILEXITO_CITIES] = get_schema_movilexito_cities();
+	$schema[MOVILEXITO_CRN_EMAIL] = get_schema_movilexito_crn_email();
+	return $schema;
+}
+
+function get_schema_movilexito_states(){
+	return [
+		'fields' => [
+			'did' => [
+				'type' => 'int',
+				'not null' => TRUE,
+			],
+			'pid' => [
+				'type' => 'int',
+				'not null' => TRUE,
+			],
+			'state' => [
+				'type' => 'varchar',
+				'length' => '80',
+				'not null' => TRUE,
+			],
+		],
+		'primary key' => ['did']
+	];
+}
+
+function get_schema_movilexito_cities(){
+	return [
+		'fields' => [			
+			'cid' => [
+				'type' => 'int',
+				'not null' => TRUE,
+			],
+			'did' => [
+				'type' => 'int',
+				'not null' => TRUE,
+			],
+			'city' => [
+				'type' => 'varchar',
+				'length' => '80',
+				'not null' => TRUE,
+			],
+		],
+		'primary key' => ['cid'],
+		'foreign keys' => [
+			'city_state' => [
+				'table' => MOVILEXITO_STATES,
+				'columns' => [
+					'did' => 'did',
+				],
+			]
+		],
+	];
+}
+
+function get_schema_movilexito_crn_email(){
+
+  return [
+    'description' => 'Almacena los correos electronicos que no fueron enviados correctamente',
+    'fields' => [
+      'id' => [
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'ID',
+      ],
+      'crn_email' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'description' => 'Email no enviado',
+      ],
+      'datos' => [
+        'type' => 'text',
+        'not null' => TRUE,
+        'description' => 'Contenido que debe ser enviado',
+      ],
+      'created' => [
+        'type' => 'int',
+        'size' => 'big',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'Timestamp del envio',
+      ],
+    ],
+    'primary key' => ['id']
+  ];
+}
+function movilexito_pqr_install(){
+
+	$states = Querys::getStates();
+	$cities = Querys::getCities();
+	$database = \Drupal::database();
+	foreach($states as $key => $value){
+		try{
+			$fields = [
+				'did' => $value[0],
+				'pid' => $value[1],
+				'state' => $value[2],
+			];
+    		$database->insert(MOVILEXITO_STATES)
+    		->fields($fields)
+    		->execute();
+  		} catch(PDOException $e) {}
+	}
+	
+	foreach($cities as $key => $value){
+		try{
+			$fields = [
+				'did' => $value[0],
+				'cid' => $value[1],
+				'city' => $value[2],
+			];
+    		$database->insert(MOVILEXITO_CITIES)
+    		->fields($fields)
+    		->execute();
+  		} catch(PDOException $e) {}
+	}	
+	
+}
+
+
+
+
+

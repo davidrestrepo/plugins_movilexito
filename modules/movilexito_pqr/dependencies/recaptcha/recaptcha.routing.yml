@@ -1,0 +1,7 @@
+recaptcha.admin:
+  path: '/admin/config/spam_protection/google_recaptcha/keys'
+  defaults:
+    _controller: '\Drupal\recaptcha\Controller\RecaptchaController::adminForm'
+    _title: ''
+  requirements:
+    _permission: 'administer recaptcha'

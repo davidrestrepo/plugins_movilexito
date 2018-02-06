@@ -1,0 +1,35 @@
+movilexito_ws.reg:
+  path: '/movilexito_ws/registro'
+  defaults:
+    _controller: '\Drupal\movilexito_ws\Controller\MovilexitoWsController::wsregisterPage'
+    _title: ''    
+  options:
+    no_cache: TRUE
+  requirements:
+    _role: 'administrator'
+
+movilexito_messeges_ws.reg:
+  path: '/movilexito_ws/mensajes'
+  defaults:
+    _controller: '\Drupal\movilexito_ws\Controller\MovilexitoWsController::wsmessagesPage'
+    _title: ''    
+  options:
+    no_cache: TRUE
+  requirements:
+    _role: 'administrator'
+
+movilexito_messeges_ws.report:
+  path: '/movilexito_ws/report'
+  defaults:
+    _controller: 'Drupal\movilexito_ws\Controller\MovilExitoWSReportController::report'
+    _title: 'Reporte de cambio de línea 1 x 1'
+  requirements:
+    _role: 'administrator'
+
+movilexito_messeges_ws.download_report:
+  path: '/movilexito_ws/download_report'
+  defaults:
+    _controller: 'Drupal\movilexito_ws\Controller\MovilExitoWSReportController::download'
+  requirements:
+    _role: 'administrator'
+

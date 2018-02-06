@@ -1,0 +1,49 @@
+movilexito_pqr.consult_pqr:
+  path: '/servicios/consulta_pqr'
+  defaults:
+    _controller: '\Drupal\movilexito_pqr\Controller\MovilExitoPQRController::consultPQR'
+    _title: ''    
+  requirements:
+    _permission: 'access content'
+
+movilexito_pqr.consult_pqr:
+  path: '/servicios/consulta_pqr_iframe'
+  defaults:
+    _controller: '\Drupal\movilexito_pqr\Controller\MovilExitoPQRController::consultPQRIframe'
+    _title: ''    
+  requirements:
+    _permission: 'access content'
+
+movilexito_pqr.add_pqr:
+  path: '/servicios/peticion'
+  defaults:
+    _controller: '\Drupal\movilexito_pqr\Controller\MovilExitoPQRController::addPQR'
+  requirements:
+    _permission: 'access content'
+
+movilexito_pqr.messages_cun:
+  path: '/movilexito_pqr/cun'
+  defaults:
+    _controller: '\Drupal\movilexito_pqr\Controller\MovilExitoPQRController::messagesCUN'
+  options:
+    no_cache: TRUE
+  requirements:
+    _role: 'administrator'
+
+movilexito_pqr.config_pqr:
+  path: '/movilexito_pqr/pqr'
+  defaults:
+    _controller: '\Drupal\movilexito_pqr\Controller\MovilExitoPQRController::configPQR'
+  options:
+    no_cache: TRUE
+  requirements:
+    _role: 'administrator'
+
+movilexito_pqr.report_pqr:
+  path: '/movilexito_pqr/report'
+  defaults:
+    _controller: '\Drupal\movilexito_pqr\Controller\MovilExitoPQRController::reportPQR'
+  options:
+    no_cache: TRUE
+  requirements:
+    _role: 'administrator'
